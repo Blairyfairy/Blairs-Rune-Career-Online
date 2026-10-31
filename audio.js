@@ -1,6 +1,6 @@
 /* Independent audio layer: off by default; browser audio begins only on user gesture. */
 (()=>{'use strict';
-const logo=new Image();logo.src='assets/favicon.svg';window.runeLogo=logo;
+const logo=new Image();logo.src='assets/Favicon.png';window.runeLogo=logo;
 let enabled=false,ctx=null,lastHover=0,lastStep=0;const button=()=>document.getElementById('sound');
 function context(){if(!ctx){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;ctx=new A()}if(ctx.state==='suspended')ctx.resume().catch(()=>{});return ctx}
 function tone(freq=440,dur=.09,type='sine',gain=.035,delay=0){if(!enabled)return;try{const a=context();if(!a)return;const t=a.currentTime+delay,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0002,gain),t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+dur+.01)}catch(e){console.warn('Audio unavailable:',e)}}
